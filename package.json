@@ -1,0 +1,8 @@
+{
+  "name": "impressora-rosas",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": { "start": "node server.js henziscooficial" },
+  "dependencies": { "tiktok-live-connector": "^2.0.0", "ws": "^8.0.0" }
+}
