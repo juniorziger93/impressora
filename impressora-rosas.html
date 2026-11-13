@@ -8,67 +8,69 @@
 <meta name="theme-color" content="#000000">
 <title>Impressora de Rosas</title>
 <style>
+  :root{--vh:1vh}
+  body.tv{--vh:.6vh}
   *{box-sizing:border-box}
   html,body{margin:0;height:100%;overflow:hidden;font-family:"Segoe UI",Arial,sans-serif;-webkit-user-select:none;user-select:none}
   body{background:
     linear-gradient(#0003,#0000 25%,#0007),
     repeating-linear-gradient(90deg,#c27c33 0 46px,#a96a28 46px 49px,#b87530 49px 95px,#9c5f24 95px 98px)}
 
-  #printer{position:absolute;left:50%;top:2vh;height:96vh;width:min(96vw,1000px);transform:translateX(-50%)}
-  #housing{position:absolute;left:0;right:0;top:0;height:10vh;z-index:20;border-radius:1.2vh 1.2vh .6vh .6vh;
+  #printer{position:absolute;left:50%;top:calc(2*var(--vh));height:calc(96*var(--vh));width:min(96vw,1000px);transform:translateX(-50%)}
+  #housing{position:absolute;left:0;right:0;top:0;height:calc(10*var(--vh));z-index:20;border-radius:calc(1.2*var(--vh)) calc(1.2*var(--vh)) calc(.6*var(--vh)) calc(.6*var(--vh));
     background:linear-gradient(#444 0,#181818 10%,#050505 60%,#1a1a1a 100%);
-    box-shadow:0 1.2vh 2.5vh #000a, inset 0 2px 0 #888;display:flex;align-items:center;justify-content:space-between;padding:0 4%}
-  #housing .brand{color:#e8e8e8;font:800 2.6vh/1 "Segoe UI",Arial;letter-spacing:.35em;text-shadow:0 0 8px #fff4}
+    box-shadow:0 calc(1.2*var(--vh)) calc(2.5*var(--vh)) #000a, inset 0 2px 0 #888;display:flex;align-items:center;justify-content:space-between;padding:0 4%}
+  #housing .brand{color:#e8e8e8;font:800 calc(2.6*var(--vh))/1 "Segoe UI",Arial;letter-spacing:.35em;text-shadow:0 0 8px #fff4}
   #housing .brand b{color:#ff3b5c}
-  #housing .led{width:1.6vh;height:1.6vh;border-radius:50%;background:#2dff6a;box-shadow:0 0 10px #2dff6a;animation:pisca 1.4s infinite}
+  #housing .led{width:calc(1.6*var(--vh));height:calc(1.6*var(--vh));border-radius:50%;background:#2dff6a;box-shadow:0 0 10px #2dff6a;animation:pisca 1.4s infinite}
   @keyframes pisca{50%{opacity:.25}}
-  #housing .slot{position:absolute;left:12%;right:12%;bottom:1.2vh;height:.5vh;border-radius:9px;background:linear-gradient(90deg,#222,#555,#222)}
+  #housing .slot{position:absolute;left:12%;right:12%;bottom:calc(1.2*var(--vh));height:calc(.5*var(--vh));border-radius:9px;background:linear-gradient(90deg,#222,#555,#222)}
 
-  #deck{position:absolute;left:0;right:0;top:9vh;bottom:0}
+  #deck{position:absolute;left:0;right:0;top:calc(9*var(--vh));bottom:0}
   .rail{position:absolute;top:0;bottom:0;width:4%;z-index:12;border-radius:6px;
     background:linear-gradient(90deg,#4a4a4a 0,#d8d8d8 22%,#fff 38%,#9a9a9a 62%,#3b3b3b 100%);box-shadow:0 0 14px #0009}
   .rail.l{left:0}.rail.r{right:0}
-  .bracket{position:absolute;left:-30%;right:-30%;height:7vh;border-radius:5px;z-index:13;
+  .bracket{position:absolute;left:-30%;right:-30%;height:calc(7*var(--vh));border-radius:5px;z-index:13;
     background:linear-gradient(90deg,#555,#bbb 30%,#888 70%,#444);box-shadow:0 5px 10px #0008, inset 0 2px 0 #fff6}
-  .bracket.top{top:0}.bracket.bot{bottom:0;height:5vh}
+  .bracket.top{top:0}.bracket.bot{bottom:0;height:calc(5*var(--vh))}
 
-  #clip{position:absolute;left:4.5%;right:4.5%;top:0;bottom:3vh;overflow:hidden;background:#d9d1bb;
-    border-radius:0 0 3vw 3vw / 0 0 4vh 4vh;box-shadow:inset 0 0 40px #0003,0 0 20px #0006}
-  #clip::before{content:"";position:absolute;left:0;right:0;top:0;height:2.6vh;z-index:7;
-    background:linear-gradient(#0b0b0b,#5a5a5a 40%,#1d1d1d);box-shadow:0 .6vh 1vh #000a}
+  #clip{position:absolute;left:4.5%;right:4.5%;top:0;bottom:calc(3*var(--vh));overflow:hidden;background:#d9d1bb;
+    border-radius:0 0 3vw 3vw / 0 0 calc(4*var(--vh)) calc(4*var(--vh));box-shadow:inset 0 0 40px #0003,0 0 20px #0006}
+  #clip::before{content:"";position:absolute;left:0;right:0;top:0;height:calc(2.6*var(--vh));z-index:7;
+    background:linear-gradient(#0b0b0b,#5a5a5a 40%,#1d1d1d);box-shadow:0 calc(.6*var(--vh)) calc(1*var(--vh)) #000a}
   #clip::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:6;
     background:linear-gradient(#000a 0,#0000 9%),linear-gradient(0deg,#0007 0,#0000 10%),
       linear-gradient(90deg,#0005,#0000 4%,#0000 96%,#0005)}
   #feed{position:absolute;left:0;right:0;top:0;height:100%;will-change:transform}
-  .sheet{position:absolute;left:0;right:0;border-bottom:.5vh dashed #0005;background-color:#f4eddb;
-    background-image:radial-gradient(circle,#0003 0 .55vh,#0000 .6vh),radial-gradient(circle,#0003 0 .55vh,#0000 .6vh),
+  .sheet{position:absolute;left:0;right:0;border-bottom:calc(.5*var(--vh)) dashed #0005;background-color:#f4eddb;
+    background-image:radial-gradient(circle,#0003 0 calc(.55*var(--vh)),#0000 calc(.6*var(--vh))),radial-gradient(circle,#0003 0 calc(.55*var(--vh)),#0000 calc(.6*var(--vh))),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size:2.4vh 4vh,2.4vh 4vh,160px 160px;background-position:1.2% 0,98.8% 0,0 0;background-repeat:repeat-y,repeat-y,repeat}
+    background-size:calc(2.4*var(--vh)) calc(4*var(--vh)),calc(2.4*var(--vh)) calc(4*var(--vh)),160px 160px;background-position:1.2% 0,98.8% 0,0 0;background-repeat:repeat-y,repeat-y,repeat}
 
-  #gantry{position:absolute;left:-1%;right:-1%;top:4vh;height:0;z-index:14}
-  #gantry .bar{position:absolute;left:0;right:0;top:-.9vh;height:1.8vh;border-radius:1vh;
-    background:linear-gradient(#fff 0,#c9c9c9 30%,#7a7a7a 70%,#3a3a3a 100%);box-shadow:0 1.2vh 1.6vh #0009}
-  #gantry .end{position:absolute;top:-4vh;width:5.5%;height:8vh;border-radius:6px;
+  #gantry{position:absolute;left:-1%;right:-1%;top:calc(4*var(--vh));height:0;z-index:14}
+  #gantry .bar{position:absolute;left:0;right:0;top:calc(-.9*var(--vh));height:calc(1.8*var(--vh));border-radius:calc(1*var(--vh));
+    background:linear-gradient(#fff 0,#c9c9c9 30%,#7a7a7a 70%,#3a3a3a 100%);box-shadow:0 calc(1.2*var(--vh)) calc(1.6*var(--vh)) #0009}
+  #gantry .end{position:absolute;top:calc(-4*var(--vh));width:5.5%;height:calc(8*var(--vh));border-radius:6px;
     background:linear-gradient(90deg,#444,#aaa 35%,#777 75%,#333);box-shadow:0 6px 10px #000a, inset 0 2px 0 #fff6}
   #gantry .end.l{left:0}#gantry .end.r{right:0}
-  #carriage{position:absolute;top:-4.6vh;width:15%;height:9.4vh;z-index:15}
-  #carriage .top{position:absolute;left:0;right:0;top:0;height:60%;border-radius:.8vh;
-    background:linear-gradient(#555,#1b1b1b 40%,#0a0a0a);box-shadow:0 .8vh 1.5vh #000b, inset 0 1px 0 #999}
-  #carriage .front{position:absolute;left:6%;right:6%;top:42%;height:42%;border-radius:.6vh;
-    background:linear-gradient(#f2f2f2,#a5a5a5 50%,#555);box-shadow:0 .6vh 1vh #000a}
-  #carriage .lamp{position:absolute;left:30%;right:30%;top:70%;height:.9vh;border-radius:9px;background:#e9f6ff;
-    box-shadow:0 0 1.5vh #8fd0ff,0 .8vh 1.8vh #8fd0ffaa}
-  #carriage .beam{position:absolute;left:34%;right:34%;top:84%;height:3.4vh;opacity:0;filter:blur(2px);
+  #carriage{position:absolute;top:calc(-4.6*var(--vh));width:15%;height:calc(9.4*var(--vh));z-index:15}
+  #carriage .top{position:absolute;left:0;right:0;top:0;height:60%;border-radius:calc(.8*var(--vh));
+    background:linear-gradient(#555,#1b1b1b 40%,#0a0a0a);box-shadow:0 calc(.8*var(--vh)) calc(1.5*var(--vh)) #000b, inset 0 1px 0 #999}
+  #carriage .front{position:absolute;left:6%;right:6%;top:42%;height:42%;border-radius:calc(.6*var(--vh));
+    background:linear-gradient(#f2f2f2,#a5a5a5 50%,#555);box-shadow:0 calc(.6*var(--vh)) calc(1*var(--vh)) #000a}
+  #carriage .lamp{position:absolute;left:30%;right:30%;top:70%;height:calc(.9*var(--vh));border-radius:9px;background:#e9f6ff;
+    box-shadow:0 0 calc(1.5*var(--vh)) #8fd0ff,0 calc(.8*var(--vh)) calc(1.8*var(--vh)) #8fd0ffaa}
+  #carriage .beam{position:absolute;left:34%;right:34%;top:84%;height:calc(3.4*var(--vh));opacity:0;filter:blur(2px);
     background:linear-gradient(#ff3b5cdd,#0000);transition:opacity .15s}
-  #carriage.on .lamp{background:#ff6a88;box-shadow:0 0 2vh #ff3b5c,0 1vh 2.4vh #ff3b5ccc}
+  #carriage.on .lamp{background:#ff6a88;box-shadow:0 0 calc(2*var(--vh)) #ff3b5c,0 calc(1*var(--vh)) calc(2.4*var(--vh)) #ff3b5ccc}
   #carriage.on .beam{opacity:1}
-  #carriage .led2{position:absolute;right:10%;top:12%;width:.9vh;height:.9vh;border-radius:50%;background:#ff3b3b;box-shadow:0 0 6px #f33}
+  #carriage .led2{position:absolute;right:10%;top:12%;width:calc(.9*var(--vh));height:calc(.9*var(--vh));border-radius:50%;background:#ff3b3b;box-shadow:0 0 6px #f33}
 
-  .card{position:absolute;border:.4vh solid #151515;background:#fbf6e6;container-type:size;
+  .card{position:absolute;border:calc(.4*var(--vh)) solid #151515;background:#fbf6e6;container-type:size;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2cqh;transform:rotate(var(--r,0deg))}
   .card.done{animation:brilho .9s ease-out}
   @keyframes brilho{0%{filter:brightness(1.35) saturate(1.3)}100%{filter:none}}
-  .card .ft{width:min(64cqw,54cqh);aspect-ratio:1;border-radius:50%;border:.4vh solid #151515;background:#ddd;overflow:hidden;flex:none}
+  .card .ft{width:min(64cqw,54cqh);aspect-ratio:1;border-radius:50%;border:calc(.4*var(--vh)) solid #151515;background:#ddd;overflow:hidden;flex:none}
   .card .ft img{width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.05) saturate(1.1)}
   .card .nome{max-width:90%;color:#8d1620;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     font:700 min(10cqw,9cqh) "Segoe Script","Brush Script MT","Lucida Handwriting",cursive}
@@ -76,16 +78,25 @@
   .card .rep{position:absolute;right:3cqw;top:3cqh;font:700 min(6cqw,5cqh) "Segoe UI",Arial;color:#fff;
     background:#8d1620;border-radius:99px;padding:.2em .6em}
 
-  #hud{position:absolute;left:1.2vh;top:1.2vh;z-index:50;display:flex;gap:1vh;align-items:center;
-    font:600 1.9vh/1 "Segoe UI",Arial;color:#fff;background:#000b;padding:1vh 1.6vh;border-radius:99px}
-  #dot{width:1.3vh;height:1.3vh;border-radius:50%;background:#f33}
+  #hud{position:absolute;left:calc(1.2*var(--vh));top:calc(1.2*var(--vh));z-index:50;display:flex;gap:calc(1*var(--vh));align-items:center;
+    font:600 calc(1.9*var(--vh))/1 "Segoe UI",Arial;color:#fff;background:#000b;padding:calc(1*var(--vh)) calc(1.6*var(--vh));border-radius:99px}
+  #dot{width:calc(1.3*var(--vh));height:calc(1.3*var(--vh));border-radius:50%;background:#f33}
   #dot.ok{background:#2dff6a;box-shadow:0 0 8px #2dff6a}
-  #som{position:absolute;left:50%;bottom:2vh;transform:translateX(-50%);z-index:60;background:#ff3b5c;color:#fff;
-    font:700 2.4vh "Segoe UI",Arial;padding:1.2vh 2.4vh;border-radius:99px;box-shadow:0 4px 14px #0008;display:none}
+  #som{position:absolute;left:50%;bottom:calc(2*var(--vh));transform:translateX(-50%);z-index:60;background:#ff3b5c;color:#fff;
+    font:700 calc(2.4*var(--vh)) "Segoe UI",Arial;padding:calc(1.2*var(--vh)) calc(2.4*var(--vh));border-radius:99px;box-shadow:0 4px 14px #0008;display:none}
+
+  #tv{position:absolute;left:0;right:0;bottom:0;height:40vh;z-index:1;background:#000;overflow:hidden;display:none}
+  body.tv #tv{display:block}
+  #tv::before{content:"";position:absolute;left:0;right:0;top:0;height:2.5vh;z-index:2;background:linear-gradient(#000c,#0000)}
+  #vid{width:100%;height:100%;object-fit:cover;display:block}
+  #pick{position:absolute;left:50%;bottom:6vh;transform:translateX(-50%);z-index:55;display:none;background:#222;color:#fff;
+    font:700 2.2vh "Segoe UI",Arial;padding:1.2vh 2.4vh;border-radius:99px;border:2px solid #ff3b5c}
 </style>
 </head>
-<body>
+<body class="tv">
 <div id="hud"><span id="dot"></span><span id="hudtxt"></span></div>
+<div id="tv"><video id="vid" muted loop playsinline autoplay></video></div>
+<button id="pick">🎬 Escolher vídeo da lareira</button><input id="file" type="file" accept="video/*" hidden>
 <div id="som">🔊 Toque para ligar som e tela cheia</div>
 <div id="printer">
   <div id="housing"><div class="led"></div><div class="brand">PRINT <b>ROSAS</b></div><div class="led"></div><div class="slot"></div></div>
@@ -163,6 +174,31 @@ function initAudio(){
 function unlock(){ initAudio(); if(AC && AC.state !== 'running') AC.resume(); }
 ['pointerdown', 'touchstart', 'keydown', 'click'].forEach(ev => addEventListener(ev, unlock));
 initAudio();
+
+
+/* ===== VÍDEO DA LAREIRA (embaixo da impressora) =====
+   Fonte: vídeo escolhido no celular (fica salvo) ou lareira.mp4 junto do site, ou ?video=URL.  ?video=0 desliga, ?mute=1 sem som, ?vol=0.5 volume */
+if(P.get('video') === '0') document.body.classList.remove('tv');
+const vid = $('vid'), pick = $('pick'), file = $('file');
+vid.volume = Math.min(1, +(P.get('vol') || .7));
+function idb(){ return new Promise((ok, no) => { const r = indexedDB.open('impressora', 1);
+  r.onupgradeneeded = () => r.result.createObjectStore('k'); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); }); }
+async function dbGet(){ try{ const d = await idb(); return await new Promise(ok => { const q = d.transaction('k').objectStore('k').get('video');
+  q.onsuccess = () => ok(q.result || null); q.onerror = () => ok(null); }); }catch(e){ return null; } }
+async function dbSet(b){ try{ const d = await idb(); d.transaction('k', 'readwrite').objectStore('k').put(b, 'video'); }catch(e){} }
+async function carregarVideo(){
+  const b = await dbGet();
+  vid.src = b ? URL.createObjectURL(b) : (P.get('video') && P.get('video') !== '0' ? P.get('video') : 'lareira.mp4');
+  vid.play().catch(() => {});
+}
+vid.addEventListener('error', () => { pick.style.display = 'block'; });
+vid.addEventListener('playing', () => { if(!P.get('trocar')) pick.style.display = 'none'; });
+if(P.get('trocar')) pick.style.display = 'block';
+pick.onclick = () => file.click();
+file.onchange = () => { const f = file.files[0]; if(!f) return; dbSet(f); vid.src = URL.createObjectURL(f); vid.play().catch(() => {}); pick.style.display = 'none'; };
+function somVideo(){ if(P.get('mute') !== '1') vid.muted = false; vid.play().catch(() => {}); }
+['click', 'touchend', 'keydown'].forEach(ev => addEventListener(ev, somVideo));
+if(document.body.classList.contains('tv')) carregarVideo();
 
 // tela cheia ao tocar (some a barra do navegador); ?fs=0 desliga
 function telaCheia(){

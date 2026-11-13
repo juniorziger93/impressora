@@ -6,12 +6,26 @@ const { WebSocketServer } = require('ws');
 
 const USER = (process.argv[2] || 'henziscooficial').replace('@', '');
 const PORT = process.env.PORT || 8080;
-const HTML = path.join(__dirname, 'impressora-rosas.html');
 
+const TIPOS = { '.html': 'text/html; charset=utf-8', '.mp4': 'video/mp4', '.webm': 'video/webm' };
 const srv = http.createServer((req, res) => {
-  fs.readFile(HTML, (e, d) => {
-    res.writeHead(e ? 500 : 200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(e ? 'impressora-rosas.html nao encontrado' : d);
+  let f = decodeURIComponent((req.url || '/').split('?')[0]);
+  if (f === '/' || f === '') f = '/impressora-rosas.html';
+  const full = path.join(__dirname, path.normalize(f));
+  const tipo = TIPOS[path.extname(full).toLowerCase()];
+  if (!tipo || !full.startsWith(__dirname)) { res.writeHead(404); return res.end('nao encontrado'); }
+  fs.stat(full, (e, st) => {
+    if (e || !st.isFile()) { res.writeHead(404); return res.end('nao encontrado'); }
+    const m = /bytes=(\d*)-(\d*)/.exec(req.headers.range || '');
+    if (m) {
+      const a = m[1] ? +m[1] : 0, b = m[2] ? +m[2] : st.size - 1;
+      if (a > b || a >= st.size) { res.writeHead(416, { 'Content-Range': 'bytes */' + st.size }); return res.end(); }
+      res.writeHead(206, { 'Content-Type': tipo, 'Accept-Ranges': 'bytes', 'Content-Range': `bytes ${a}-${b}/${st.size}`, 'Content-Length': b - a + 1 });
+      fs.createReadStream(full, { start: a, end: b }).pipe(res);
+    } else {
+      res.writeHead(200, { 'Content-Type': tipo, 'Accept-Ranges': 'bytes', 'Content-Length': st.size });
+      fs.createReadStream(full).pipe(res);
+    }
   });
 });
 const wss = new WebSocketServer({ server: srv });
