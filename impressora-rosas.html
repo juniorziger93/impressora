@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
 <title>Impressora de Rosas</title>
 <style>
   *{box-sizing:border-box}
@@ -83,7 +86,7 @@
 </head>
 <body>
 <div id="hud"><span id="dot"></span><span id="hudtxt"></span></div>
-<div id="som">🔊 Toque para ativar o som</div>
+<div id="som">🔊 Toque para ligar som e tela cheia</div>
 <div id="printer">
   <div id="housing"><div class="led"></div><div class="brand">PRINT <b>ROSAS</b></div><div class="led"></div><div class="slot"></div></div>
   <div id="deck">
@@ -160,6 +163,15 @@ function initAudio(){
 function unlock(){ initAudio(); if(AC && AC.state !== 'running') AC.resume(); }
 ['pointerdown', 'touchstart', 'keydown', 'click'].forEach(ev => addEventListener(ev, unlock));
 initAudio();
+
+// tela cheia ao tocar (some a barra do navegador); ?fs=0 desliga
+function telaCheia(){
+  if(P.get('fs') === '0' || document.fullscreenElement || document.webkitFullscreenElement) return;
+  const e = document.documentElement, f = e.requestFullscreen || e.webkitRequestFullscreen;
+  if(!f) return;
+  try{ const r = f.call(e); if(r && r.catch) r.catch(() => {}); }catch(x){}
+}
+addEventListener('click', telaCheia); addEventListener('touchend', telaCheia);
 
 function som(mode, spd){
   if(!nodes || AC.state !== 'running') return;
